@@ -15,6 +15,18 @@ function App() {
     dateAdded: "",
     postcodeArea: "",
   });
+    const [favourites, setFavourites] = useState([]);
+
+      function addToFavourites(property) {
+    if (!favourites.find((fav) => fav.id === property.id)) {
+      setFavourites([...favourites, property]);
+    }
+  }
+
+  function removeFromFavourites(id) {
+    setFavourites(favourites.filter((fav) => fav.id !== id));
+  }
+
 
   const filteredProperties = propertiesData.properties.filter((property) => {
     if (filters.type && property.type !== filters.type) return false;
@@ -48,9 +60,30 @@ function App() {
 
             <SearchForm filters={filters} setFilters={setFilters} />
 
-            {filteredProperties.map((property) => (
-              <PropertyCard key={property.id} property={property} />
-            ))}
+           {filteredProperties.map((property) => (
+             <PropertyCard
+                key={property.id}
+                property={property}
+                addToFavourites={addToFavourites}
+                favourites={favourites}
+              />
+))}
+  {favourites.length > 0 && (
+    <div style={{ marginTop: "30px" }}>
+      <h2>Favourites</h2>
+
+      {favourites.map((property) => (
+        <PropertyCard
+          key={property.id}
+          property={property}
+          removeFromFavourites={removeFromFavourites}
+          favourites={favourites}
+        />
+      ))}
+  </div>
+
+)}
+
           </div>
         }
       />

@@ -1,7 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function PropertyCard({ property }) {
+function PropertyCard({
+  property,
+  addToFavourites,
+  removeFromFavourites,
+  favourites,
+}) {
+  const isFavourite =
+    favourites && favourites.find((fav) => fav.id === property.id);
+
   return (
     <div
       style={{
@@ -16,9 +24,21 @@ function PropertyCard({ property }) {
       <p><strong>Bedrooms:</strong> {property.bedrooms}</p>
       <p>{property.shortDescription}</p>
 
-      <Link to={`/property/${property.id}`}>
-        View details
-      </Link>
+      <Link to={`/property/${property.id}`}>View details</Link>
+
+      <div style={{ marginTop: "10px" }}>
+        {addToFavourites && !isFavourite && (
+          <button onClick={() => addToFavourites(property)}>
+            Add to favourites
+          </button>
+        )}
+
+        {removeFromFavourites && isFavourite && (
+          <button onClick={() => removeFromFavourites(property.id)}>
+            Remove from favourites
+          </button>
+        )}
+      </div>
     </div>
   );
 }
