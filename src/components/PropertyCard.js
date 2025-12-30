@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function PropertyCard({ property }) {
   return (
@@ -14,6 +15,10 @@ function PropertyCard({ property }) {
       <p><strong>Price:</strong> £{property.price}</p>
       <p><strong>Bedrooms:</strong> {property.bedrooms}</p>
       <p>{property.shortDescription}</p>
+
+      <Link to={`/property/${property.id}`}>
+        View details
+      </Link>
     </div>
   );
 }

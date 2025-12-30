@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { Routes, Route } from "react-router-dom";
 import propertiesData from "./data/properties.json";
 import PropertyCard from "./components/PropertyCard";
 import SearchForm from "./components/SearchForm";
+import PropertyDetails from "./pages/PropertyDetails";
 
 function App() {
   const [filters, setFilters] = useState({
@@ -37,15 +39,23 @@ function App() {
   });
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Estate Agent Properties</h1>
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <div style={{ padding: "20px" }}>
+            <h1>Estate Agent Properties</h1>
 
-      <SearchForm filters={filters} setFilters={setFilters} />
+            <SearchForm filters={filters} setFilters={setFilters} />
 
-      {filteredProperties.map((property) => (
-        <PropertyCard key={property.id} property={property} />
-      ))}
-    </div>
+            {filteredProperties.map((property) => (
+              <PropertyCard key={property.id} property={property} />
+            ))}
+          </div>
+        }
+      />
+      <Route path="/property/:id" element={<PropertyDetails />} />
+    </Routes>
   );
 }
 
