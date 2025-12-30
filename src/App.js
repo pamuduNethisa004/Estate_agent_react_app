@@ -1,16 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
 import propertiesData from "./data/properties.json";
 import PropertyCard from "./components/PropertyCard";
 import SearchForm from "./components/SearchForm";
 
 function App() {
+  const [filters, setFilters] = useState({
+    type: "",
+    minPrice: "",
+    maxPrice: "",
+    minBedrooms: "",
+    maxBedrooms: "",
+    dateAdded: "",
+    postcodeArea: "",
+  });
+
+  const filteredProperties = propertiesData.properties.filter((property) => {
+    if (filters.type && property.type !== filters.type) return false;
+    if (filters.minPrice && property.price < Number(filters.minPrice)) return false;
+    if (filters.maxPrice && property.price > Number(filters.maxPrice)) return false;
+    if (filters.minBedrooms && property.bedrooms < Number(filters.minBedrooms)) return false;
+    if (filters.maxBedrooms && property.bedrooms > Number(filters.maxBedrooms)) return false;
+    if (
+      filters.dateAdded &&
+      new Date(property.dateAdded) < new Date(filters.dateAdded)
+    )
+      return false;
+    if (
+      filters.postcodeArea &&
+      !property.postcodeArea
+        .toLowerCase()
+        .includes(filters.postcodeArea.toLowerCase())
+    )
+      return false;
+
+    return true;
+  });
+
   return (
     <div style={{ padding: "20px" }}>
       <h1>Estate Agent Properties</h1>
 
-      <SearchForm />
+      <SearchForm filters={filters} setFilters={setFilters} />
 
-      {propertiesData.properties.map((property) => (
+      {filteredProperties.map((property) => (
         <PropertyCard key={property.id} property={property} />
       ))}
     </div>
