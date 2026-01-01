@@ -10,34 +10,65 @@ function PropertyCard({
   const isFavourite =
     favourites && favourites.find((fav) => fav.id === property.id);
 
+  const handleDragStart = (e) => {
+    e.dataTransfer.setData("propertyId", property.id);
+    e.dataTransfer.setData("property", JSON.stringify(property));
+    e.dataTransfer.effectAllowed = "copy";
+  };
+
   return (
-    <div
-      style={{
-        border: "1px solid #ccc",
-        marginBottom: "12px",
-        padding: "12px",
-        borderRadius: "6px",
-      }}
+    <div 
+      className="property-card"
+      draggable="true"
+      onDragStart={handleDragStart}
+      style={{ cursor: "grab" }}
     >
-      <h2>{property.type}</h2>
-      <p><strong>Price:</strong> £{property.price}</p>
-      <p><strong>Bedrooms:</strong> {property.bedrooms}</p>
-      <p>{property.shortDescription}</p>
+      <img 
+        src={property.images && property.images.length > 0 ? property.images[0] : "https://via.placeholder.com/400x220?text=No+Image"} 
+        alt={property.type}
+      />
+      
+      <div className="property-content">
+        <div className="property-title">
+          {property.location || property.address}
+        </div>
+        
+        <div className="property-price">
+          £{property.price.toLocaleString()}
+        </div>
+        
+        <div className="property-meta">
+          {property.type} • {property.bedrooms} Beds
+        </div>
+        
+        <p style={{ color: "#666", fontSize: "14px", marginBottom: "16px" }}>
+          {property.shortDescription}
+        </p>
+        
+        <div className="card-buttons">
+          <Link to={`/property/${property.id}`} style={{ flex: 1, textDecoration: "none" }}>
+            <button className="btn-view">View Details</button>
+          </Link>
+          
+          {addToFavourites && !isFavourite && (
+            <button 
+              className="btn-save" 
+              onClick={() => addToFavourites(property)}
+            >
+              ♥ Save
+            </button>
+          )}
 
-      <Link to={`/property/${property.id}`}>View details</Link>
-
-      <div style={{ marginTop: "10px" }}>
-        {addToFavourites && !isFavourite && (
-          <button onClick={() => addToFavourites(property)}>
-            Add to favourites
-          </button>
-        )}
-
-        {removeFromFavourites && isFavourite && (
-          <button onClick={() => removeFromFavourites(property.id)}>
-            Remove from favourites
-          </button>
-        )}
+          {removeFromFavourites && isFavourite && (
+            <button 
+              className="btn-save" 
+              onClick={() => removeFromFavourites(property.id)}
+              style={{ backgroundColor: "#e74c3c", color: "white" }}
+            >
+              Remove
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
