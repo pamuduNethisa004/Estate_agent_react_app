@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/Estate_agent_react_app/static/css/main.22fc65fd.css",
-    "main.js": "/Estate_agent_react_app/static/js/main.483a9079.js",
+    "main.css": "/Estate_agent_react_app/static/css/main.59504c5e.css",
+    "main.js": "/Estate_agent_react_app/static/js/main.33158992.js",
     "index.html": "/Estate_agent_react_app/index.html",
-    "main.22fc65fd.css.map": "/Estate_agent_react_app/static/css/main.22fc65fd.css.map",
-    "main.483a9079.js.map": "/Estate_agent_react_app/static/js/main.483a9079.js.map"
+    "main.59504c5e.css.map": "/Estate_agent_react_app/static/css/main.59504c5e.css.map",
+    "main.33158992.js.map": "/Estate_agent_react_app/static/js/main.33158992.js.map"
   },
   "entrypoints": [
-    "static/css/main.22fc65fd.css",
-    "static/js/main.483a9079.js"
+    "static/css/main.59504c5e.css",
+    "static/js/main.33158992.js"
   ]
 }
